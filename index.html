@@ -6,18 +6,87 @@
 <title>Em memória do Floquinho 🐾</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#0f1117;--sf:#1a1d27;--sf2:#22263a;--bd:#2e3347;--gn:#22c55e;--gnd:#166534;--gnb:#052e16;--am:#f59e0b;--amd:#92400e;--amb:#2d1a00;--bl:#3b82f6;--blb:#172554;--rd:#ef4444;--tx:#f1f5f9;--txm:#64748b;--txd:#94a3b8}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
-.hero{background:var(--sf);border-bottom:1px solid var(--bd);padding:1.75rem 1.25rem 1.25rem;text-align:center}
+:root{
+  --bg:#0f1117;
+  --sf:#1a1d27;
+  --sf2:#22263a;
+  --bd:#2e3347;
+
+  --gn:#22c55e;
+  --gnd:#166534;
+  --gnb:#052e16;
+
+  --am:#f59e0b;
+  --amd:#92400e;
+  --amb:#2d1a00;
+
+  --bl:#3b82f6;
+  --blb:#172554;
+
+  --rd:#ef4444;
+
+  --tx:#f1f5f9;
+  --txm:#64748b;
+  --txd:#94a3b8;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:'Nunito',sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(34,197,94,.08),
+      transparent 40%
+    ),
+    var(--bg);
+
+  color:var(--tx);
+
+  min-height:100vh;
+}
+
+.container{
+  width:100%;
+  max-width:780px;
+
+  margin:0 auto;
+
+  padding:0 1rem;
+}
+.hero{background:var(--sf);border-bottom:1px solid var(--bd);  padding:2.5rem 1.5rem 1.8rem;margin-top:1rem;border-radius:24px;;text-align:center}
 .paw{font-size:40px;display:block;margin-bottom:8px;animation:fl 3s ease-in-out infinite}
 @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .hero h1{font-size:clamp(19px,4vw,30px);font-weight:800;color:#fff;margin-bottom:5px}
-.hero p{font-size:13px;color:var(--txd);max-width:420px;margin:0 auto;line-height:1.6}
+.hero p{font-size:13px;color:var(--txd);max-width:420px;margin:0 auto;margin-top:.8rem;line-height:1.6}
 
 .pet-photo-wrap{display:flex;justify-content:center;margin-top:1rem;}
-.pet-photo{width:160px;height:160px;object-fit:cover;border-radius:20px;border:3px solid var(--gn);box-shadow:0 0 25px rgba(34,197,94,.25);}
+.pet-photo{
+  width:190px;
+  height:190px;
 
+  object-fit:cover;
+
+  border-radius:24px;
+
+  border:4px solid rgba(34,197,94,.35);
+
+  box-shadow:
+    0 0 35px rgba(34,197,94,.18),
+    0 10px 30px rgba(0,0,0,.35);
+
+  transition:transform .2s ease;
+}
+
+.pet-photo:hover{
+  transform:scale(1.03);
+}
 .story{max-width:700px;margin:1.5rem auto;padding:1.4rem;background:linear-gradient(180deg,rgba(34,197,94,.08),rgba(255,255,255,.02));border:1px solid rgba(34,197,94,.18);border-radius:18px;color:var(--tx);font-size:15px;line-height:1.9;font-weight:600;text-align:left;box-shadow:0 0 25px rgba(34,197,94,.06),inset 0 1px 0 rgba(255,255,255,.03);backdrop-filter:blur(6px);}
 .story::first-line{font-size:17px;font-weight:800;color:#fff;}
 .story strong{color:var(--gn);}
@@ -51,10 +120,84 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);min-he
 .fb{padding:5px 9px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--txm);font-family:'Nunito',sans-serif;font-size:11px;cursor:pointer;font-weight:700;transition:all .12s}
 .fb.on{background:var(--sf2);color:var(--tx);border-color:var(--txm)}
 
-.gw{padding:0 1.25rem 7rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:4px}
-.nb{aspect-ratio:1;border-radius:6px;border:1px solid var(--gnd);background:var(--gnb);color:var(--gn);font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;cursor:pointer;transition:transform .1s;display:flex;align-items:center;justify-content:center}
-.nb:hover{transform:scale(1.12)}
+.gw{
+  padding:0 1.25rem 7rem;
+
+  max-height:600px;
+
+  overflow-y:auto;
+
+  scrollbar-width:thin;
+
+  scrollbar-color:
+    rgba(34,197,94,.4)
+    transparent;
+  .gw::-webkit-scrollbar{
+  width:8px;
+}
+
+.gw::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.gw::-webkit-scrollbar-thumb{
+  background:rgba(34,197,94,.35);
+  border-radius:999px;
+}
+
+.gw::-webkit-scrollbar-thumb:hover{
+  background:rgba(34,197,94,.6);
+}
+  .gw{
+  background:rgba(255,255,255,.02);
+
+  border:1px solid rgba(255,255,255,.04);
+
+  border-radius:18px;
+
+  padding:1rem;
+
+  backdrop-filter:blur(8px);
+}
+  @media (max-width:600px){
+
+  .gw{
+    max-height:420px;
+  }
+
+}
+}.grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fill,minmax(48px,1fr));
+
+  gap:8px;}
+.nb{
+  aspect-ratio:1;
+
+  border-radius:10px;
+
+  border:1px solid var(--gnd);
+
+  background:var(--gnb);
+
+  color:var(--gn);
+
+  font-family:'Nunito',sans-serif;
+
+  font-size:11px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:all .12s ease;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}.nb:hover{transform:scale(1.12)}
 .nb.reserved{background:var(--amb);border-color:var(--amd);color:var(--am);cursor:default}
 .nb.reserved:hover{transform:none}
 .nb.paid{background:var(--gn);border-color:var(--gn);color:var(--gnb);cursor:default;font-weight:800}
@@ -75,8 +218,20 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);min-he
 .ca{display:flex;gap:7px}
 .cbtn{padding:9px 15px;border-radius:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:opacity .12s}
 .cbtn:hover{opacity:.85}
-.cbtn.go{background:var(--gn);color:var(--gnb)}
-.cbtn.cl{background:var(--sf2);color:var(--txm)}
+.cbtn.go{
+  background:linear-gradient(
+    135deg,
+    #22c55e,
+    #16a34a
+  );
+
+  color:white;
+
+  box-shadow:
+    0 10px 25px rgba(34,197,94,.25);
+
+  font-weight:800;
+}.cbtn.cl{background:var(--sf2);color:var(--txm)}
 
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:200;align-items:center;justify-content:center;padding:1rem}
 .ov.open{display:flex}
@@ -125,34 +280,34 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);min-he
 .cost-item span{font-size:13px;}
 .cost-item strong{font-size:14px;}
 .cost-item.total strong{font-size:18px;}}
+.story,.costs,.prog-wrap,.stats,.ctrl,.gw{width:100%;}
   
 footer{text-align:center;padding:1.25rem 1rem;font-size:11px;color:var(--txm)}
 </style>
 </head>
 <body>
-
+  <div class="container">
 <div class="hero">
-  <span class="paw">🐾</span>
-  <h1>Em memória do Floquinho</h1>
-  <p>Depois de dias internado, cirurgia, exames e tratamento, nos despedimos do nosso pequeno guerreiro. A dívida ficou enorme e qualquer ajuda faz diferença.</p>
-</div>
-
-  <div class="pet-photo-wrap">
+    <div class="pet-photo-wrap">
   <img src="floquinho1.jpeg" alt="Floquinho" class="pet-photo"/>
+  </div>
+  <h1>Em memória do Floquinho</h1>
+    <span class="paw">🐾</span>
+  <p>Depois de dias internado, cirurgia, exames e tratamento, nos despedimos do nosso pequeno guerreiro. A dívida ficou enorme e qualquer ajuda faz diferença.</p>
 </div>
 
   <p class="story">
 O Floquinho não era “só um gato”.
 Ele dormia com a gente, seguia pela casa e fazia parte da família.
-
+<br>
 Quando ele piorou, fizemos tudo que estava ao nosso alcance:
 consultas, exames, internação e cirurgia.
-
+<br>
 Infelizmente, mesmo lutando até o fim, ele não resistiu.
-
+<br>
 Além da dor de perder nosso companheiro,
 ficou uma dívida veterinária enorme que não conseguimos pagar sozinhos.
-
+<br>
 Se puder ajudar com qualquer valor,
 já significa muito pra nós. 🐾
 </p>
@@ -361,5 +516,7 @@ ref.on('value',snap=>{
   buildGrid();
 });
 </script>
+
+</div>
 </body>
 </html>
