@@ -81,6 +81,7 @@
   .sq-avail { background: var(--green-light); border: 1.5px solid var(--green-mid); }
   .sq-reserv { background: var(--amber-light); border: 1.5px solid #e8c08a; }
   .sq-paid { background: var(--green-mid); border: 1.5px solid var(--green); }
+  .sq-sel { background: #dbeafe; border: 1.5px solid #3b82f6; }
 
   /* SEARCH */
   .toolbar {
@@ -140,6 +141,47 @@
   .num-btn.paid { background: var(--green-mid); border-color: var(--green); color: var(--brown-dark); cursor: default; }
   .num-btn.paid:hover { transform: none; box-shadow: none; }
   .num-btn.hidden { display: none; }
+  .num-btn.selected {
+    background: #dbeafe;
+    border-color: #3b82f6;
+    color: #1e3a8a;
+    transform: scale(1.08);
+    box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+  }
+
+  /* CARRINHO FLUTUANTE */
+  .cart-bar {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--brown-dark);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    z-index: 150;
+    align-items: center; justify-content: space-between; gap: 12px;
+    flex-wrap: wrap;
+    border-top: 2px solid var(--amber);
+    animation: slideup 0.25s ease;
+  }
+  @keyframes slideup { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  .cart-bar.visible { display: flex; }
+  .cart-info { font-size: 14px; line-height: 1.5; }
+  .cart-info strong { font-size: 18px; font-family: 'Playfair Display', serif; color: #f5e6cc; }
+  .cart-info span { font-size: 12px; color: rgba(245,230,204,0.65); display: block; }
+  .cart-nums { font-size: 12px; color: rgba(245,230,204,0.75); max-width: 220px; word-break: break-all; }
+  .cart-actions { display: flex; gap: 8px; }
+  .cart-btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .cart-btn:hover { opacity: 0.85; }
+  .cart-btn.primary { background: var(--amber); color: #fff; }
+  .cart-btn.secondary { background: transparent; border: 1px solid rgba(245,230,204,0.4); color: rgba(245,230,204,0.8); font-size: 13px; }
+
+  .grid-wrap { padding-bottom: 100px; }
 
   /* LOADING */
   .loading { text-align: center; padding: 3rem; color: var(--text-muted); font-size: 14px; }
@@ -290,7 +332,8 @@
 </div>
 
 <div class="legend">
-  <div class="leg"><div class="leg-sq sq-avail"></div>Disponível — clique para reservar</div>
+  <div class="leg"><div class="leg-sq sq-avail"></div>Disponível</div>
+  <div class="leg"><div class="leg-sq sq-sel"></div>Selecionado por você</div>
   <div class="leg"><div class="leg-sq sq-reserv"></div>Aguardando confirmação</div>
   <div class="leg"><div class="leg-sq sq-paid"></div>Pix confirmado</div>
 </div>
@@ -319,20 +362,32 @@
   <div class="admin-msg" id="a-msg"></div>
 </div>
 
+<div class="cart-bar" id="cart-bar">
+  <div class="cart-info">
+    <strong id="cart-total">R$0</strong>
+    <span id="cart-count">0 números selecionados</span>
+  </div>
+  <div class="cart-nums" id="cart-nums"></div>
+  <div class="cart-actions">
+    <button class="cart-btn secondary" onclick="clearSelection()">Limpar</button>
+    <button class="cart-btn primary" onclick="confirmSelection()">Reservar e ver Pix →</button>
+  </div>
+</div>
+
 <!-- Modal Pix -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="modal-paw">🐾</div>
-    <h2>Número <span id="m-num">000</span></h2>
-    <p class="modal-sub">Reserve agora e envie o comprovante via WhatsApp após o pagamento</p>
+    <h2 id="m-title">Seus números</h2>
+    <p class="modal-sub" id="m-sub">Reserve agora e envie o comprovante via WhatsApp após o pagamento</p>
     <div class="pix-card">
       <div class="label">Chave Pix — Celular</div>
       <div class="key">11 93292-8292</div>
-      <div class="value">R$10,00</div>
+      <div class="value" id="m-value">R$10,00</div>
     </div>
     <button class="btn-copy" onclick="copyPix()">📋 Copiar chave Pix</button>
     <a class="btn-wpp" id="wpp-link" href="#" target="_blank">💬 Enviar comprovante no WhatsApp</a>
-    <p class="inst-note">Após pagar, toque no botão acima para enviar o comprovante com o número escolhido.</p>
+    <p class="inst-note">Após pagar, toque no botão acima para enviar o comprovante informando os números escolhidos.</p>
     <button class="btn-close" onclick="closeModal()">Fechar</button>
   </div>
 </div>
@@ -355,7 +410,7 @@ const ref = db.ref('numeros');
 
 let state = {};
 let currentFilter = 'all';
-let selectedNum = null;
+let selected = new Set();
 
 function updateStats() {
   let res = 0, paid = 0;
@@ -380,16 +435,68 @@ function buildGrid() {
     btn.className = 'num-btn';
     btn.textContent = String(i).padStart(3, '0');
     btn.dataset.n = i;
-    btn.dataset.s = s;
     if (s === 'reserved') btn.classList.add('reserved');
     else if (s === 'paid') btn.classList.add('paid');
+    else if (selected.has(i)) btn.classList.add('selected');
     if (currentFilter === 'avail' && s !== 'available') btn.classList.add('hidden');
     if (currentFilter === 'paid' && s !== 'paid') btn.classList.add('hidden');
     if (search && !String(i).padStart(3,'0').includes(search.padStart(3,'0'))) btn.classList.add('hidden');
-    btn.addEventListener('click', () => { if (s === 'available') openModal(i); });
+    btn.addEventListener('click', () => { if (s === 'available') toggleSelect(i, btn); });
     g.appendChild(btn);
   }
   updateStats();
+  updateCart();
+}
+
+function toggleSelect(n, btn) {
+  if (selected.has(n)) {
+    selected.delete(n);
+    btn.classList.remove('selected');
+  } else {
+    selected.add(n);
+    btn.classList.add('selected');
+  }
+  updateCart();
+}
+
+function updateCart() {
+  const bar = document.getElementById('cart-bar');
+  const count = selected.size;
+  if (count === 0) { bar.classList.remove('visible'); return; }
+  bar.classList.add('visible');
+  document.getElementById('cart-total').textContent = 'R$' + (count * 10).toLocaleString('pt-BR');
+  document.getElementById('cart-count').textContent = count + (count === 1 ? ' número selecionado' : ' números selecionados');
+  const nums = Array.from(selected).sort((a,b) => a-b).map(n => String(n).padStart(3,'0')).join(', ');
+  document.getElementById('cart-nums').textContent = 'Nºs: ' + nums;
+}
+
+function clearSelection() {
+  selected.clear();
+  buildGrid();
+}
+
+function confirmSelection() {
+  if (selected.size === 0) return;
+  const nums = Array.from(selected).sort((a,b) => a-b);
+  const total = nums.length * 10;
+  const numsStr = nums.map(n => String(n).padStart(3,'0')).join(', ');
+
+  document.getElementById('m-title').textContent = nums.length === 1
+    ? 'Número ' + String(nums[0]).padStart(3,'0')
+    : nums.length + ' números selecionados';
+  document.getElementById('m-sub').textContent = 'Faça um único Pix de R$' + total.toLocaleString('pt-BR') + ' referente aos números: ' + numsStr;
+  document.getElementById('m-value').textContent = 'R$' + total.toLocaleString('pt-BR');
+
+  const msg = encodeURIComponent('Olá! Estou enviando o comprovante do Pix de R$' + total.toLocaleString('pt-BR') + ' para os números ' + numsStr + ' da vaquinha do Floquinho 🐾');
+  document.getElementById('wpp-link').href = 'https://wa.me/' + WPP_NUM + '?text=' + msg;
+
+  const updates = {};
+  nums.forEach(n => { updates[n] = 'reserved'; });
+  ref.update(updates);
+
+  document.getElementById('overlay').classList.add('open');
+  selected.clear();
+  updateCart();
 }
 
 ref.on('value', snap => {
@@ -411,18 +518,9 @@ function setFilter(f) {
 
 function filterGrid() { buildGrid(); }
 
-function openModal(n) {
-  selectedNum = n;
-  document.getElementById('m-num').textContent = String(n).padStart(3, '0');
-  const msg = encodeURIComponent('Olá! Estou enviando o comprovante do Pix para o número ' + String(n).padStart(3,'0') + ' da vaquinha do Floquinho 🐾');
-  document.getElementById('wpp-link').href = 'https://wa.me/' + WPP_NUM + '?text=' + msg;
-  document.getElementById('overlay').classList.add('open');
-  ref.child(n).set('reserved');
-}
-
 function closeModal() {
   document.getElementById('overlay').classList.remove('open');
-  selectedNum = null;
+  buildGrid();
 }
 
 function copyPix() {
