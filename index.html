@@ -550,8 +550,8 @@ footer{text-align:center;padding:1.5rem 1rem 2rem;font-size:12px;color:var(--txm
     <h2 id="mh">Seus números</h2>
     <p class="msub" id="ms">Faça o Pix e mande o comprovante no WhatsApp</p>
     <div class="pb">
-      <div class="pl">Chave Pix — Celular</div>
-      <div class="pk">11 9 3292-8292</div>
+      <div class="pl">Chave Pix — Chave aleatória</div>
+      <div class="pk">509a2121-2279-4716-8c6d-293fd6b72bd0</div>
       <div class="pv" id="mv">R$10,00</div>
     </div>
     <button class="mb cp" onclick="copyPix()">📋 Copiar chave Pix</button>
@@ -566,7 +566,7 @@ footer{text-align:center;padding:1.5rem 1rem 2rem;font-size:12px;color:var(--txm
 <script>
 firebase.initializeApp({ databaseURL:'https://floquinho-ed2ec-default-rtdb.firebaseio.com' });
 const db = firebase.database(), ref = db.ref('numeros');
-const PIX='11932928292', TOTAL=500, WPP='5511932928292';
+const PIX='509a2121-2279-4716-8c6d-293fd6b72bd0', TOTAL=500, WPP='5511932928292';
 let state={}, filter='all', sel=new Set();
 
 function stats(){
