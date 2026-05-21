@@ -87,6 +87,8 @@ body{
   border-radius:50%;
   border:4px solid rgba(255,220,160,.5);
   box-shadow:0 0 0 6px rgba(255,200,100,.15),0 12px 40px rgba(0,0,0,.4);
+  animation: floatPet 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(255,220,160,.35));
 }
 .hero h1{
   font-size:clamp(22px,5vw,34px);
@@ -288,6 +290,11 @@ body{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
+@keyframes floatPet {
+  0% {transform: translateY(0px);}
+  50% {transform: translateY(-10px);}
+  100% {transform: translateY(0px);}}
+
 .nb{
   aspect-ratio:1;
   border-radius:9px;
@@ -431,6 +438,49 @@ footer{text-align:center;padding:1.5rem 1rem 2rem;font-size:12px;color:var(--txm
   .stats{grid-template-columns:repeat(2,1fr)}
   .gw{max-height:420px}
 }
+  .tooltip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+
+  margin-left: 6px;
+
+  border-radius: 50%;
+
+  background: #f1f5f9;
+  color: #333;
+
+  font-size: 12px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  border: 1px solid #cbd5e1;
+}
+
+.tooltip-box {
+  display: none;
+
+  margin-top: 10px;
+
+  background: #ffffff;
+  color: #333;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  padding: 14px;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+
+  max-width: 100%;
+}
 </style>
 </head>
 <body>
@@ -465,12 +515,48 @@ footer{text-align:center;padding:1.5rem 1rem 2rem;font-size:12px;color:var(--txm
   </div>
   <div class="info-item">
     <span>📅 Data da Apuração</span>
-    <strong>Sorteio dia xx/xx/xxxx</strong>
+    <strong>Sorteio dia 18/07/2026</strong>
   </div>
-  <div class="info-item">
-    <span>📜 Regra do Sorteio</span>
-    <strong>Últimos números da Loteria Federal</strong>
-  </div>
+<div class="info-item">
+  <span>
+    📜 Regra do Sorteio
+
+    <span class="tooltip-btn" onclick="toggleTooltip()">
+      ?
+    </span>
+
+    <div class="tooltip-box" id="tooltipBox">
+      <strong>Como funciona o sorteio?</strong><br><br>
+
+      Para descobrir o número contemplado, utilizaremos os 3 últimos dígitos (a centena) dos prêmios oficiais.
+
+      <br><br>
+
+      <strong>Busca pelos 5 Prêmios:</strong><br>
+      O ganhador será o comprador da centena final do 1º prêmio.
+
+      Caso essa centena seja maior que 500, verificaremos o 2º prêmio, depois o 3º, 4º e 5º prêmio.
+
+      <br><br>
+
+      <strong>Regra de Conversão:</strong><br>
+      Se todas as centenas forem maiores que 500, pegaremos a centena do 1º prêmio e subtrairemos 500.
+
+      <br><br>
+
+      <strong>Exemplos:</strong><br><br>
+
+      ✅ 1º prêmio termina em 234 → ganhador: 234<br><br>
+
+      ✅ 1º prêmio termina em 850 e 2º em 142 → ganhador: 142<br><br>
+
+      ✅ Todos acima de 500 e 1º termina em 750 → 750 - 500 = 250 (Nota: se a centena terminar em 000, o prêmio vai para o número 500)
+    </div>
+
+  </span>
+
+  <strong>Últimos números da Loteria Federal</strong>
+</div>
   <div class="info-item warn">
     <span>⚠️ Atenção com Reservas</span>
     <strong>Números não pagos expiram em 24 horas</strong>
@@ -585,6 +671,15 @@ function stats(){
   document.getElementById('pfill').style.width=pct+'%';
   document.getElementById('prog-left').textContent=d+' restantes';
   document.getElementById('prog-money').textContent='R$'+(p*10).toLocaleString('pt-BR')+' arrecadados';
+}
+function toggleTooltip() {
+  const box = document.getElementById("tooltipBox");
+
+  if (box.style.display === "block") {
+    box.style.display = "none";
+  } else {
+    box.style.display = "block";
+  }
 }
 
 function buildGrid(){
