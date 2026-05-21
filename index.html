@@ -740,7 +740,7 @@ function confirmSel(){
   document.getElementById('mh').textContent=nums.length===1?'Número '+String(nums[0]).padStart(3,'0'):nums.length+' números selecionados';
   document.getElementById('ms').textContent='Pix único de R$'+total.toLocaleString('pt-BR')+' — Nºs: '+ns;
   document.getElementById('mv').textContent='R$'+total.toLocaleString('pt-BR');
-  const msg=encodeURIComponent('Olá! Aqui está o comprovante do Pix de R$'+total.toLocaleString('pt-BR')+' referente aos números '+ns+' da vaquinha do Floquinho 🐾❤️');
+  const msg=encodeURIComponent('Olá! Aqui está o comprovante do Pix de R$'+total.toLocaleString('pt-BR')+' referente aos números '+ns+' da vaquinha do Floquinho');
   document.getElementById('wl').href='https://wa.me/'+WPP+'?text='+msg;
   const upd={};
   nums.forEach(n=>{upd[n]='reserved';});
