@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Em memória do Floquinho 🐾</title>
+<meta property="og:title" content="Em memória do Floquinho 🐾"/>
+<meta property="og:description" content="Nossa vaquinha para cobrir os custos veterinários do nosso guerreiro. Qualquer ajuda faz diferença."/>
+<meta property="og:image" content="floquinho1.jpeg"/>
+<meta property="og:type" content="website"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#fdf6ee;--bg2:#fef9f3;--card:#ffffff;--border:#e8d9c8;--border2:#f0e4d4;
+  --brown:#7c4f2a;--brown-d:#4e2f14;--brown-l:#f5ece0;--brown-xl:#fdf0e4;
+  --orange:#e8720c;--orange-l:#fff3e8;--orange-d:#7a3a04;
+  --green:#2a7a4b;--green-l:#eaf6ef;--green-m:#6bbe96;--green-d:#0f4228;
+  --amber:#d97706;--amber-l:#fffbeb;--amber-d:#78350f;
+  --blue:#2563eb;--blue-l:#eff6ff;--red:#dc2626;
+  --tx:#2c1a0a;--txm:#7a5c3e;--txd:#a8845e;
+  --shadow:0 2px 12px rgba(124,79,42,.10);--shadow-l:0 1px 4px rgba(124,79,42,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;}
+
+.hero{background:linear-gradient(160deg,#4e2f14 0%,#9a5c2e 55%,#c47a3e 100%);padding:2.5rem 1rem 3.5rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -10%,rgba(255,200,120,.18),transparent 65%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:36px;background:var(--bg);border-radius:50% 50% 0 0/100% 100% 0 0;}
+.pet-wrap{display:flex;justify-content:center;margin-bottom:1rem;}
+.pet-photo{width:150px;height:150px;object-fit:cover;border-radius:50%;border:4px solid rgba(255,220,160,.5);animation:floatPet 3.5s ease-in-out infinite,glowPet 2.5s ease-in-out infinite;box-shadow:0 0 0 6px rgba(255,200,100,.15),0 12px 40px rgba(0,0,0,.35);}
+@keyframes floatPet{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+@keyframes glowPet{0%{box-shadow:0 0 0 6px rgba(255,200,100,.10),0 10px 30px rgba(0,0,0,.28);}50%{box-shadow:0 0 25px rgba(255,210,120,.45),0 15px 45px rgba(0,0,0,.38);}100%{box-shadow:0 0 0 6px rgba(255,200,100,.10),0 10px 30px rgba(0,0,0,.28);}}
+.hero h1{font-size:clamp(22px,5vw,34px);font-weight:800;color:#fff9f0;margin-bottom:8px;text-shadow:0 2px 8px rgba(0,0,0,.25);}
+.hero p{font-size:14px;color:rgba(255,240,210,.78);max-width:440px;margin:0 auto;line-height:1.7;}
+
+.wrap{max-width:820px;margin:0 auto;padding:0 .85rem 5rem}
+
+.story{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:1.5rem;margin:1.5rem 0;font-size:14px;line-height:1.9;color:var(--tx);box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.story::before{content:'🐾';position:absolute;right:-8px;top:-8px;font-size:80px;opacity:.05;transform:rotate(-10deg);pointer-events:none;}
+.story-title{font-size:16px;font-weight:800;color:var(--brown-d);display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+
+.info-card{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:1.25rem;margin:1rem 0;box-shadow:var(--shadow);}
+.info-card h3{font-size:16px;font-weight:800;color:var(--brown-d);margin-bottom:12px;text-align:center;}
+.info-item{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1rem;margin-bottom:.6rem;background:var(--brown-xl);border:1px solid var(--border2);border-radius:12px;transition:transform .15s;}
+.info-item:hover{transform:translateY(-2px);}
+.info-item span{font-size:13px;color:var(--txm);font-weight:600}
+.info-item strong{font-size:13px;color:var(--tx);font-weight:800}
+.info-item.warn{background:var(--amber-l);border-color:rgba(217,119,6,.25);}
+.info-item.warn span{color:var(--amber-d)}
+.info-item.warn strong{color:var(--amber)}
+.tooltip-btn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-left:6px;border-radius:50%;background:#f1f5f9;color:#333;font-size:12px;font-weight:bold;cursor:pointer;border:1px solid #cbd5e1;}
+.tooltip-box{display:none;margin-top:10px;background:#ffffff;color:#333;border:1px solid #e2e8f0;border-radius:12px;padding:14px;font-size:14px;line-height:1.5;box-shadow:0 4px 14px rgba(0,0,0,0.08);max-width:100%;}
+
+.prog-card{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:1.25rem 1.5rem;margin:1rem 0;box-shadow:var(--shadow);}
+.prog-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;}
+.prog-lbl{font-size:12px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.5px}
+.prog-pct{font-size:26px;font-weight:800;color:var(--green)}
+.prog-bg{height:13px;background:var(--border);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--green) 0%,#52c98a 100%);border-radius:99px;transition:width .6s ease;min-width:2px;}
+.prog-bot{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;color:var(--txm);}
+.prog-bot strong{color:var(--green);font-weight:800}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:1rem 0;}
+.stat{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:12px 8px;text-align:center;box-shadow:var(--shadow-l);}
+.stat-n{font-size:20px;font-weight:800;color:var(--tx)}
+.stat-n.g{color:var(--green)}.stat-n.a{color:var(--amber)}.stat-n.o{color:var(--orange)}
+.stat-l{font-size:10px;color:var(--txd);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+
+.ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:1rem 0 .5rem;}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--txm);font-weight:700}
+.lsq{width:13px;height:13px;border-radius:4px;flex-shrink:0}
+.la{background:var(--green-l);border:1.5px solid var(--green-m)}.ls{background:var(--blue-l);border:1.5px solid #93c5fd}
+.lr{background:var(--amber-l);border:1.5px solid #fcd34d}.lp{background:var(--green-m);border:1.5px solid var(--green)}
+.frow{display:flex;gap:5px;margin-left:auto}
+.fb{padding:6px 11px;border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;background:var(--bg2);color:var(--txm);cursor:pointer;transition:all .12s;}
+.fb.on{background:var(--brown-d);color:#fff;border-color:var(--brown-d)}
+.si{padding:7px 11px;border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito',sans-serif;font-size:12px;background:var(--card);color:var(--tx);outline:none;width:120px;}
+.si:focus{border-color:var(--brown)}
+
+.gw{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:1rem;max-height:580px;overflow-y:auto;box-shadow:var(--shadow);scrollbar-width:thin;scrollbar-color:rgba(124,79,42,.3) transparent;}
+.gw::-webkit-scrollbar{width:6px}.gw::-webkit-scrollbar-thumb{background:rgba(124,79,42,.3);border-radius:99px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px;}
+.loading{text-align:center;padding:3rem;color:var(--txm);font-size:13px}
+.sp{display:inline-block;width:22px;height:22px;border:2.5px solid var(--border);border-top-color:var(--brown);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:8px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.nb{aspect-ratio:1;border-radius:9px;border:1.5px solid var(--green-m);background:var(--green-l);color:var(--green-d);font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;cursor:pointer;transition:transform .11s,box-shadow .11s;display:flex;align-items:center;justify-content:center;user-select:none;}
+.nb:hover{transform:scale(1.14);box-shadow:0 3px 10px rgba(42,122,75,.25)}
+.nb.reserved{background:var(--amber-l);border-color:#fcd34d;color:var(--amber-d);cursor:default}
+.nb.reserved:hover{transform:none;box-shadow:none}
+.nb.paid{background:var(--green-m);border-color:var(--green);color:var(--green-d);cursor:default;font-weight:800}
+.nb.paid:hover{transform:none;box-shadow:none}
+.nb.selected{background:var(--blue-l);border-color:#3b82f6;color:var(--blue);transform:scale(1.1);box-shadow:0 2px 8px rgba(37,99,235,.25);}
+.nb.hidden{display:none}
+
+.cart{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--brown-d);border-top:3px solid var(--orange);padding:.9rem 1.25rem;z-index:200;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;animation:su .2s ease;}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.cart.vis{display:flex}
+.ct{font-size:20px;font-weight:800;color:#fff5e8}.cs{font-size:11px;color:rgba(255,230,180,.65)}.cn{font-size:11px;color:rgba(255,230,180,.55);max-width:190px}
+.ca{display:flex;gap:7px}
+.cbtn{padding:10px 16px;border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;border:none;transition:opacity .12s;}
+.cbtn:hover{opacity:.85}
+.cbtn.go{background:linear-gradient(135deg,#e8720c,#c45a08);color:#fff;box-shadow:0 6px 20px rgba(232,114,12,.35);}
+.cbtn.cl{background:rgba(255,255,255,.12);color:rgba(255,230,180,.8)}
+
+/* MODAL BASE */
+.ov{display:none;position:fixed;inset:0;background:rgba(40,20,5,.65);z-index:300;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px);}
+.ov.open{display:flex}
+.modal{background:var(--card);border-radius:22px;padding:1.75rem;max-width:370px;width:100%;animation:pop .2s ease;box-shadow:0 20px 60px rgba(78,47,20,.3);}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.mp{font-size:28px;text-align:center;margin-bottom:6px}
+.modal h2{font-size:18px;font-weight:800;text-align:center;color:var(--brown-d);margin-bottom:4px}
+.msub{font-size:13px;color:var(--txm);text-align:center;line-height:1.6;margin-bottom:1.1rem}
+
+/* STEP 1 — formulário */
+.form-step{}
+.finput{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:11px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--tx);background:var(--bg2);outline:none;margin-bottom:10px;}
+.finput:focus{border-color:var(--brown)}
+.finput::placeholder{color:var(--txd)}
+.nums-preview{background:var(--brown-xl);border:1px solid var(--border2);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--txm);margin-bottom:12px;line-height:1.5;}
+.nums-preview strong{color:var(--brown-d);display:block;margin-bottom:2px;}
+
+/* STEP 2 — pix */
+.pix-step{display:none}
+.pb{background:var(--brown-d);border-radius:14px;padding:1.1rem;text-align:center;margin-bottom:.9rem;}
+.pl{font-size:10px;color:rgba(255,230,180,.6);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.pk{font-size:16px;font-weight:800;color:#fff5e8;letter-spacing:.5px;margin:4px 0;word-break:break-all;}
+.pv{font-size:26px;font-weight:800;color:var(--green-m)}
+
+.mb{width:100%;padding:11px;border-radius:11px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;margin-bottom:7px;border:none;transition:opacity .12s;}
+.mb:hover{opacity:.87}
+.mb.primary{background:linear-gradient(135deg,#e8720c,#c45a08);color:#fff;}
+.mb.cp{background:var(--brown-xl);color:var(--brown-d);border:1.5px solid var(--border)}
+.mb.wp{background:#25d366;color:#fff;display:block;text-align:center;text-decoration:none}
+.mb.cx{background:transparent;color:var(--txm);border:1.5px solid var(--border);font-size:12px}
+.mb.back{background:transparent;color:var(--txm);border:1.5px solid var(--border);font-size:12px}
+.mn{font-size:11px;color:var(--txm);text-align:center;line-height:1.6;margin:7px 0}
+.ferr{font-size:12px;color:var(--red);font-weight:700;margin-bottom:8px;min-height:16px;}
+
+.costs-card{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:1.25rem;margin:1rem 0;box-shadow:var(--shadow);}
+.costs-card h3{font-size:16px;font-weight:800;color:var(--brown-d);text-align:center;margin-bottom:12px}
+.cost-item{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1rem;margin-bottom:.55rem;background:var(--brown-xl);border:1px solid var(--border2);border-radius:12px;transition:transform .15s;}
+.cost-item:hover{transform:translateY(-2px)}
+.cost-item span{font-size:13px;color:var(--txm);font-weight:600}
+.cost-item strong{font-size:13px;color:var(--tx);font-weight:800}
+.cost-item.total{background:linear-gradient(135deg,rgba(42,122,75,.12),rgba(42,122,75,.04));border-color:rgba(42,122,75,.3);}
+.cost-item.total span{font-size:14px;font-weight:800;color:var(--green-d)}
+.cost-item.total strong{font-size:17px;color:var(--green)}
+
+footer{text-align:center;padding:1.5rem 1rem 2rem;font-size:12px;color:var(--txm);font-weight:700}
+@media(max-width:500px){.stats{grid-template-columns:repeat(2,1fr)}.gw{max-height:420px}}
+</style>
+</head>
+<body>
+
+  <!-- RESULTADO DO SORTEIO -->
+<div style="
+background:linear-gradient(135deg,#eaf6ef,#f8fffa);
+border:2px solid #2a7a4b;
+border-radius:20px;
+padding:24px;
+margin:24px 0;
+box-shadow:0 8px 25px rgba(42,122,75,.12);
+text-align:center;
+">
+
+<div style="font-size:46px;margin-bottom:8px;">🏆</div>
+
+<h2 style="
+font-size:28px;
+color:#2a7a4b;
+margin-bottom:12px;
+font-weight:800;
+">
+Sorteio Realizado
+</h2>
+
+<p style="
+font-size:16px;
+line-height:1.7;
+color:#3f3f3f;
+margin-bottom:18px;
+">
+A rifa em memória do <strong>Floquinho</strong> foi encerrada com sucesso.
+O sorteio foi realizado <strong>no dia 19/07/2026</strong>, conforme o regulamento divulgado desde o início da campanha, utilizando o resultado oficial da <strong>Loterias Caixa</strong>.
+</p>
+
+<div style="
+background:#fff;
+border-radius:16px;
+padding:18px;
+margin:20px auto;
+max-width:450px;
+border:1px solid #d7e8dc;
+">
+
+<div style="
+font-size:14px;
+color:#666;
+margin-bottom:6px;
+">
+🎉 Número contemplado
+</div>
+
+<div style="
+font-size:52px;
+font-weight:800;
+color:#2a7a4b;
+letter-spacing:4px;
+">
+235
+</div>
+
+</div>
+
+<a
+href="https://www.youtube.com/watch?v=Kf_1lrykM3M&t=12m09s"
+target="_blank"
+style="
+display:inline-block;
+margin-top:10px;
+background:#cc0000;
+color:#fff;
+padding:14px 26px;
+border-radius:12px;
+text-decoration:none;
+font-weight:800;
+font-size:16px;
+">
+▶ Assistir à gravação da live
+</a>
+
+<div style="margin-top:28px;">
+<h3 style="
+margin-bottom:12px;
+color:#7c4f2a;
+">
+Resultado Oficial
+</h3>
+
+<img
+src="Resultado-loteria.jpeg"
+alt="Resultado oficial da Loteria Federal"
+style="
+max-width:100%;
+border-radius:14px;
+border:1px solid #ddd;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+">
+</div>
+
+<div style="
+margin-top:22px;
+padding:16px;
+background:#fff8e7;
+border-radius:14px;
+border:1px solid #f0d99a;
+">
+
+<strong style="color:#9a5a00;">
+❤️ Muito obrigado!
+</strong>
+
+<p style="
+margin-top:10px;
+line-height:1.7;
+color:#555;
+font-size:15px;
+">
+Agradecemos de coração a todas as pessoas que compraram números, compartilharam a campanha e nos apoiaram neste momento tão difícil.
+Toda a arrecadação foi destinada ao pagamento das despesas veterinárias do Floquinho, e o prêmio da rifa foi entregue conforme prometido.
+</p>
+
+</div>
+
+</div>
+
+<div class="hero">
+  <div class="pet-wrap"><img src="floquinho2.jpeg" alt="Floquinho" class="pet-photo"/></div>
+  <h1>🤍 Em memória do Floquinho 🤍</h1>
+  <p>Depois de dias internado, cirurgia e muito amor, nos despedimos do nosso pequeno guerreiro. A dívida ficou grande e qualquer ajuda faz diferença.</p>
+</div>
+
+<div class="wrap">
+
+<div class="story">
+  <div class="story-title">🐾 A história do Floquinho</div>
+  O Floquinho entrou na nossa vida quando era só um filhotinho assustado resgatado da rua. Aos poucos, ele foi perdendo o medo e tomando conta de tudo. Ele nunca foi um simples animal de estimação, ele era nosso parceiro de verdade. Dormia no meio da gente, ia atrás dos nossos passos pela casa toda e participava de cada momento da nossa rotina.
+  <br/><br/>
+  A gente não imaginava que teria que se despedir tão cedo. De uma hora para outra, passamos por uma emergência desesperadora. Corremos com ele para a clínica, fizemos todos os exames, internamos e ele precisou passar por uma cirurgia de urgência. A gente tinha muita esperança e ele lutou muito. Mas, infelizmente, o corpinho dele não aguentou a recuperação no pós-operatório e ele descansou.
+  <br/><br/>
+  A dor de voltar para casa e não ter o Floquinho esperando na janela é indescritível. E no meio de todo esse luto, ainda precisamos lidar com uma dívida gigante na clínica veterinária. Qualquer valor que você puder ajudar vai fazer uma diferença enorme. Muito obrigado por lerem a nossa história. 🐾
+</div>
+
+<div class="info-card">
+  <h3>ℹ️ Informações da Rifa</h3>
+  <div class="info-item"><span>🎁 Prêmio para o Ganhador</span><strong>Pix de R$500,00</strong></div>
+  <div class="info-item"><span>📅 Data da Apuração</span><strong>Sorteio dia 19/07/2026</strong></div>
+  <div class="info-item">
+    <span>📜 Regra do Sorteio <span class="tooltip-btn" onclick="toggleTooltip()">?</span>
+      <div class="tooltip-box" id="tooltipBox">
+        <strong>Como funciona o sorteio?</strong><br><br>
+        Utilizaremos os 3 primeiros dígitos (a centena) dos prêmios oficiais.<br><br>
+        <strong>Busca pelos 1º Prêmio:</strong><br>O ganhador será o comprador da centena inicial do 1º prêmio. Caso seja maior que 500, verificaremos o 2º, 3º, 4º, 5º, 6º, 7º, ... prêmio.<br><br>
+        <strong>Regra de Conversão:</strong><br>Se todas forem maiores que 500, pegamos a centena do 1º prêmio e subtraímos 500.<br><br>
+        ✅ 1º termina em 234 → ganhador: 234<br><br>
+        ✅ 1º termina em 850 e 2º em 142 → ganhador: 142<br><br>
+        ✅ Todos acima de 500 e 1º termina em 750 → 750-500 = 250
+      </div>
+    </span>
+    <strong>3 primeiros dígitos (a centena) dos prêmios oficiais.</strong>
+  </div>
+  <div class="info-item warn"><span>⚠️ Atenção com Reservas</span><strong>Números não pagos expiram em 24 horas</strong></div>
+</div>
+
+<div class="prog-card">
+  <div class="prog-top"><span class="prog-lbl">Números vendidos</span><span class="prog-pct" id="ppct">0%</span></div>
+  <div class="prog-bg"><div class="prog-fill" id="pfill"></div></div>
+  <div class="prog-bot"><span id="prog-left">500 restantes</span><strong id="prog-money">R$0 arrecadados</strong></div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n o" id="sd">500</div><div class="stat-l">🟢 Disponíveis</div></div>
+  <div class="stat"><div class="stat-n a" id="sr">0</div><div class="stat-l">⏳ Aguardando</div></div>
+  <div class="stat"><div class="stat-n g" id="sp">0</div><div class="stat-l">✅ Confirmados</div></div>
+  <div class="stat"><div class="stat-n g" id="sv">R$0</div><div class="stat-l">💰 Arrecadado</div></div>
+</div>
+
+<div class="ctrl">
+  <div class="leg"><div class="lsq la"></div>Disponível</div>
+  <div class="leg"><div class="lsq ls"></div>Selecionado</div>
+  <div class="leg"><div class="lsq lr"></div>Aguardando</div>
+  <div class="leg"><div class="lsq lp"></div>Pago ✅</div>
+  <div class="frow">
+    <button class="fb on" id="f-all" onclick="setF('all')">Todos</button>
+    <button class="fb" id="f-avail" onclick="setF('avail')">Livres</button>
+    <button class="fb" id="f-paid" onclick="setF('paid')">Pagos</button>
+  </div>
+  <input class="si" type="number" id="si" placeholder="Buscar nº..." min="1" max="500" oninput="buildGrid()"/>
+</div>
+
+<div class="gw">
+  <div id="loading" class="loading"><div class="sp"></div><br>Carregando números...</div>
+  <div class="grid" id="grid" style="display:none"></div>
+</div>
+
+<div class="costs-card" style="margin-top:1.5rem">
+  <h3>🧾 Custos do Tratamento</h3>
+  <div class="cost-item"><span>Cirurgia, medicamentos e diárias</span><strong>R$3.206,05</strong></div>
+  <div class="cost-item"><span>Exames e medicamentos</span><strong>R$1.802,36</strong></div>
+  <div class="cost-item total"><span>Total da dívida</span><strong>R$5.008,41</strong></div>
+</div>
+
+<footer>Feito com amor em memória do Floquinho 🐾</footer>
+</div>
+
+<!-- CARRINHO -->
+<div class="cart" id="cart">
+  <div><div class="ct" id="ct">R$0</div><div class="cs" id="cs">0 números selecionados</div></div>
+  <div class="cn" id="cn"></div>
+  <div class="ca">
+    <button class="cbtn cl" onclick="clearSel()">Limpar</button>
+    <button class="cbtn go" onclick="abrirModal()">Continuar →</button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="ov" id="ov">
+  <div class="modal">
+    <div class="mp">🐾</div>
+    <h2 id="mh">Quase lá!</h2>
+    <p class="msub" id="ms">Preencha seus dados para reservar os números</p>
+
+    <!-- STEP 1: dados -->
+    <div class="form-step" id="step1">
+      <div class="nums-preview" id="nums-preview">
+        <strong>Números selecionados:</strong>
+        <span id="nums-list"></span>
+      </div>
+      <input class="finput" type="text" id="f-nome" placeholder="Nome e sobrenome *" maxlength="60"/>
+      <input class="finput" type="tel" id="f-tel" placeholder="WhatsApp com DDD * (ex: 11912345678)" maxlength="20"/>
+      <div class="ferr" id="ferr"></div>
+      <button class="mb primary" onclick="confirmarDados()">Reservar e ver Pix →</button>
+      <button class="mb cx" onclick="closeM()">Cancelar</button>
+    </div>
+
+    <!-- STEP 2: pix -->
+    <div class="pix-step" id="step2">
+      <p class="msub" id="ms2"></p>
+      <div class="pb">
+        <div class="pl">Chave Pix — Chave aleatória</div>
+        <div class="pk">509a2121-2279-4716-8c6d-293fd6b72bd0</div>
+        <div class="pv" id="mv">R$10,00</div>
+      </div>
+      <button class="mb cp" onclick="copyPix()">📋 Copiar chave Pix</button>
+      <a class="mb wp" id="wl" href="#" target="_blank">💬 Enviar comprovante no WhatsApp</a>
+      <p class="mn">Após pagar, toque acima para enviar o comprovante. Seu número já está reservado!</p>
+      <button class="mb cx" onclick="closeM()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+firebase.initializeApp({ databaseURL:'https://floquinho-ed2ec-default-rtdb.firebaseio.com' });
+const db = firebase.database(), ref = db.ref('numeros');
+const refComp = db.ref('compradores');
+const PIX='509a2121-2279-4716-8c6d-293fd6b72bd0', TOTAL=500, WPP='5511932928292';
+let state={}, filter='all', sel=new Set();
+
+function stats(){
+  let r=0,p=0;
+  for(let i=1;i<=TOTAL;i++){const s=state[i]||'available';if(s==='reserved')r++;else if(s==='paid')p++;}
+  const d=TOTAL-r-p, pct=Math.round((p/TOTAL)*100);
+  document.getElementById('sd').textContent=d;
+  document.getElementById('sr').textContent=r;
+  document.getElementById('sp').textContent=p;
+  document.getElementById('sv').textContent='R$'+(p*10).toLocaleString('pt-BR');
+  document.getElementById('ppct').textContent=pct+'%';
+  document.getElementById('pfill').style.width=pct+'%';
+  document.getElementById('prog-left').textContent=d+' restantes';
+  document.getElementById('prog-money').textContent='R$'+(p*10).toLocaleString('pt-BR')+' arrecadados';
+}
+
+function buildGrid(){
+  const g=document.getElementById('grid');
+  const sv=document.getElementById('si').value.trim();
+  g.innerHTML='';
+  for(let i=1;i<=TOTAL;i++){
+    const s=state[i]||'available';
+    const b=document.createElement('button');
+    b.className='nb';b.textContent=String(i).padStart(3,'0');
+    if(s==='reserved')b.classList.add('reserved');
+    else if(s==='paid')b.classList.add('paid');
+    else if(sel.has(i))b.classList.add('selected');
+    if(filter==='avail'&&s!=='available')b.classList.add('hidden');
+    if(filter==='paid'&&s!=='paid')b.classList.add('hidden');
+    if(sv&&!String(i).padStart(3,'0').includes(sv.padStart(3,'0')))b.classList.add('hidden');
+    b.addEventListener('click',()=>{if(s==='available')toggle(i,b);});
+    g.appendChild(b);
+  }
+  stats();updateCart();
+}
+
+function toggle(n,b){
+  if(sel.has(n)){sel.delete(n);b.classList.remove('selected');}
+  else{sel.add(n);b.classList.add('selected');}
+  updateCart();
+}
+
+function updateCart(){
+  const c=sel.size,bar=document.getElementById('cart');
+  if(c===0){bar.classList.remove('vis');return;}
+  bar.classList.add('vis');
+  document.getElementById('ct').textContent='R$'+(c*10).toLocaleString('pt-BR');
+  document.getElementById('cs').textContent=c+(c===1?' número selecionado':' números selecionados');
+  document.getElementById('cn').textContent='Nºs: '+Array.from(sel).sort((a,b)=>a-b).map(n=>String(n).padStart(3,'0')).join(', ');
+}
+
+function clearSel(){sel.clear();buildGrid();}
+
+function abrirModal(){
+  if(!sel.size)return;
+  const nums=Array.from(sel).sort((a,b)=>a-b);
+  document.getElementById('nums-list').textContent=nums.map(n=>String(n).padStart(3,'0')).join(', ');
+  document.getElementById('mh').textContent='Quase lá!';
+  document.getElementById('ms').textContent='Preencha seus dados para reservar '+(nums.length===1?'o número':'os números');
+  document.getElementById('f-nome').value='';
+  document.getElementById('f-tel').value='';
+  document.getElementById('ferr').textContent='';
+  document.getElementById('step1').style.display='block';
+  document.getElementById('step2').style.display='none';
+  document.getElementById('ov').classList.add('open');
+}
+
+function confirmarDados(){
+  const nome=document.getElementById('f-nome').value.trim();
+  const tel=document.getElementById('f-tel').value.trim();
+  const err=document.getElementById('ferr');
+  if(!nome){err.textContent='Por favor, informe seu nome e sobrenome.';return;}
+  if(!tel||tel.replace(/\D/g,'').length<10){err.textContent='Por favor, informe um WhatsApp válido com DDD.';return;}
+  err.textContent='';
+
+  const nums=Array.from(sel).sort((a,b)=>a-b);
+  const total=nums.length*10;
+  const ns=nums.map(n=>String(n).padStart(3,'0')).join(', ');
+
+  // Salva reserva + dados no Firebase
+  const upd={};
+  nums.forEach(n=>{upd[n]='reserved';});
+  ref.update(upd);
+  nums.forEach(n=>{
+    refComp.child(n).set({nome:nome,telefone:tel,status:'reserved'});
+  });
+
+  // Monta modal pix
+  document.getElementById('mh').textContent=nums.length===1?'Número '+String(nums[0]).padStart(3,'0'):nums.length+' números reservados!';
+  document.getElementById('ms2').textContent='Olá, '+nome.split(' ')[0]+'! Faça um único Pix de R$'+total.toLocaleString('pt-BR')+' — Nºs: '+ns;
+  document.getElementById('mv').textContent='R$'+total.toLocaleString('pt-BR');
+  const msg=encodeURIComponent('Olá! Sou '+nome+', aqui está o comprovante do Pix de R$'+total.toLocaleString('pt-BR')+' referente aos números '+ns+' da vaquinha do Floquinho 🐾');
+  document.getElementById('wl').href='https://wa.me/'+WPP+'?text='+msg;
+
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').style.display='block';
+
+  sel.clear();updateCart();
+}
+
+function closeM(){document.getElementById('ov').classList.remove('open');buildGrid();}
+
+function copyPix(){
+  navigator.clipboard.writeText(PIX).then(()=>{
+    const b=document.querySelector('.mb.cp');
+    b.textContent='✓ Copiado!';
+    setTimeout(()=>{b.textContent='📋 Copiar chave Pix';},2200);
+  });
+}
+
+function setF(f){
+  filter=f;
+  ['all','avail','paid'].forEach(x=>{document.getElementById('f-'+x).classList.toggle('on',x===f);});
+  buildGrid();
+}
+
+function toggleTooltip(){
+  const box=document.getElementById('tooltipBox');
+  box.style.display=box.style.display==='block'?'none':'block';
+}
+
+ref.on('value',snap=>{
+  const d=snap.val()||{};state={};
+  for(const [k,v] of Object.entries(d))state[parseInt(k)]=v;
+  document.getElementById('loading').style.display='none';
+  document.getElementById('grid').style.display='grid';
+  buildGrid();
+});
+</script>
+</body>
+</html>
